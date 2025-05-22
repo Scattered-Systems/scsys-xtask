@@ -1,14 +1,26 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+/*
+    Appellation: scsys-xtask <library>
+    Contrib: @FL03
+*/
+//! # scsys-xtask
+//! 
+//! The `scsys-xtask` library provides a common set of primitives and utilities for building 
+//! and managing projects in the `scsys` ecosystem.
+#![crate_name = "scsys_xtask"]
+#![crate_type = "lib"]
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+#[doc(inline)]
+pub use self::error::*;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+#[cfg(feature = "cli")]
+pub mod cli;
+pub mod error;
+pub mod pipes;
+
+pub mod prelude {
+    #[cfg(feature = "cli")]
+    pub use crate::cli::prelude::*;
+    pub use crate::error::*;
+    pub use crate::pipes::prelude::*;
+
 }

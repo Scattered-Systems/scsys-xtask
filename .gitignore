@@ -1,27 +1,26 @@
-# Artifacts
-
-**/.artifacts/data/
+# Directories
+**/.artifacts/
+**/.build/
+**/.cache/
+**/.coverage/
 **/.docker/data/
 
-## Caches
 
-**/.cache/
+
 
 # Configuration Files
-
-**/config.*
-**/*.config.*
+**/.config/*.config.*
+**/.config/*.toml
+**/.config/*.yaml
+**/.config/*.yml
+**/.config/*.json
 
 **/*.env
 **/*.env.*
 
 ### Exceptions
 !**/default.config.*
-!**/*.config.cjs
-!**/*.config.js
-!**/*.config.mjs
-!**/config.py
-!**/config.rs
+!**/example.config.*
 
 !**/example.env.*
 !**/*.env.example
@@ -29,36 +28,19 @@
 
 # Dev
 
-### Idea
+### Docker 
 
+!**/Dockerfile
+!**/docker-compose.yml
+!**/*.dockerfile
+
+### Intellij
 **/.idea/
 
 ### vscode
-
 **/.vscode/
 
-# File Extensions
-
-**/*.lock
-**/*.lock.*
-
-**/*-lock.*
-
-**/*.log
-**/*.log.*
-
-### Data Files
-
-**/*.csv
-**/*.csv.*
-
-**/*.db
-**/*.db.*
-
-**/*.db-*.*
-
-**/*.zip
-**/*.zip.*
+# Language Specific
 
 ## Rust
 **/debug/
@@ -70,7 +52,7 @@
 !**/Cargo.lock
 
 ## Node
-**/build/
+build/
 **/debug/
 **/dist/
 **/node_modules/
@@ -109,3 +91,21 @@
 
 ### Windows (WSL2)
 **/*:Zone.Identifier
+
+# Miscellaneous
+
+## Files
+
+**/*.csv
+**/*.csv.*
+
+**/*.db
+**/*.db.*
+
+**/*.db-*.*
+
+**/*.log
+**/*.log.*
+
+**/*.zip
+**/*.zip.*

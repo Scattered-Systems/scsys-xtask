@@ -10,13 +10,17 @@ edition = "2024"
 homepage =  "https://github.com/scattered-systems/scsys-xtask/wiki"
 keywords = ["scsys", "xtask", "build", "system"]
 license = "Apache-2.0"
-license-file = "LICENSE"
 name = "scsys-xtask"
 readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys-xtask.git"
 resolver = "3"
 rust-version = "1.85.0"
 version = "0.0.0"
+
+[package.metadata.docs.rs]
+all-features = false
+features = ["full"]
+rustc-args = ["--cfg", "docsrs"]
 
 [[bin]]
 name = "scsys"
@@ -25,7 +29,83 @@ required-features = ["cli"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]
+bench = false
+doc = true
+doctest = true
+test = true
 
+
+[dependencies]
+clap = { features = ["cargo", "derive", "env"], optional = true, version = "4" }
+config = { optional = true, version = "0.15" }
+duct = { optional = true, version = "1" }
+# custom
+scsys = { features = ["derive"], version = "0.2.5" }
+# data & serialization
+serde = { optional = true, features = ["derive"], version = "1" }
+serde_json = { optional = true, version = "1" }
+# error handling
+anyhow = { version = "1" }
+thiserror = { version = "2" }
+# logging
+tracing = { features = ["attributes", "log"], optional = true, version = "0.1" }
+tracing-subscriber = { features = ["env-filter", "fmt"], optional = true, version = "0.3" }
+# macros
+smart-default = { version = "0.7" }
+strum = { features = ["derive"], version = "0.27" }
+
+[features]
+default = [
+    "json"
+]
+
+full = [
+    "default",
+    "duct",
+    "tracing",
+]
+
+# ************* [FF:Features] *************
+cli = [
+    "full",
+    "clap",
+    "config",
+    "tracing-subscriber",
+]
+
+# ************* [FF:Dependencies] *************
+clap = ["dep:clap"]
+
+config = ["dep:config"]
+
+duct = ["dep:duct"]
+
+json = [
+    "serde",
+    "serde_json",
+]
+
+serde = [
+    "dep:serde",
+    "tracing-subscriber?/serde",
+]
+
+serde_json = ["dep:serde_json"]
+
+tracing = ["dep:tracing"]
+
+tracing-subscriber = [
+    "dep:tracing-subscriber",
+    "tracing",
+    "tracing-subscriber?/env-filter",
+    "tracing-subscriber?/fmt",
+]
+
+# ************* [Unit Tests] *************
+[[test]]
+name = "default"
+
+# ************* [Profiles] *************
 [profile.dev]
 codegen-units = 256
 debug = true
@@ -47,18 +127,3 @@ overflow-checks = false
 panic = "unwind"
 rpath = false
 strip = true
-
-[dependencies]
-clap = { features = ["cargo", "derive", "env"], version = "4" }
-duct = { optional = true, version = "1" }
-# serialization
-serde = { features = ["derive"], version = "1" }
-serde_json = "1"
-
-[features]
-default = []
-
-full = []
-
-cli = []
-

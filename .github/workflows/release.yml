@@ -22,12 +22,11 @@ on:
         default: false
         type: boolean
 
-permissions:
-  contents: read
-  deployments: write
-
 jobs:
   native:
+    permissions:
+      contents: read
+      deployments: write
     env:
       IS_PRERELEASE: ${{ github.event.inputs.prerelease || github.event.release.prerelease }} 
     strategy:
@@ -49,7 +48,6 @@ jobs:
         name: build (release)
         run: cargo build --locked --release --features full --workspace
       - 
-        if: github.event_name == 'release' && github.event.action == 'published'
         name: Create Release Artifacts
         uses: softprops/action-gh-release@v2
         with:
@@ -70,3 +68,4 @@ jobs:
             
           files: |
             target/release/scsys
+            
