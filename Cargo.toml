@@ -4,22 +4,48 @@ authors = [
     "Scattered-Systems <support@scsys.io>"
 ]
 categories = ["dev-tools"]
-default-run = "scatpack"
+default-run = "scsys"
 description = "A custom build system for the scsys ecosystem"
 edition = "2024"
 homepage =  "https://github.com/scattered-systems/scsys-xtask/wiki"
+keywords = ["scsys", "xtask", "build", "system"]
+license = "Apache-2.0"
+license-file = "LICENSE"
 name = "scsys-xtask"
+readme = "README.md"
 repository = "https://github.com/scattered-systems/scsys-xtask.git"
+resolver = "3"
 rust-version = "1.85.0"
 version = "0.0.0"
 
-
 [[bin]]
-name = "scatpack"
+name = "scsys"
 path = "bin/xtask.rs"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
+
+[profile.dev]
+codegen-units = 256
+debug = true
+incremental = true
+lto = "thin"
+opt-level = 2
+overflow-checks = true
+panic = "unwind"
+rpath = true
+strip = false
+
+[profile.release]
+codegen-units = 16
+debug = false
+incremental = false
+lto = true
+opt-level = "z"
+overflow-checks = false
+panic = "unwind"
+rpath = false
+strip = true
 
 [dependencies]
 clap = { features = ["cargo", "derive", "env"], version = "4" }

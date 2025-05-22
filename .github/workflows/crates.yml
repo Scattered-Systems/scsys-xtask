@@ -27,7 +27,8 @@ jobs:
       max-parallel: 1
       fail-fast: false
       matrix:
-        feature: [ traits, util, core, config, crypto, derive, macros ]
+        package:
+          - ${{ github.event.repository.name }}
     runs-on: ubuntu-latest
     steps:
       - 
@@ -40,20 +41,5 @@ jobs:
           cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           cache-workspaces: true
       - 
-        name: Publish (${{ matrix.feature }})
-        run: cargo publish --locked --package ${{ github.event.repository.name }}-${{ matrix.feature }}
-  sdk:
-    needs: deps
-    runs-on: ubuntu-latest
-    steps:
-      - 
-        uses: actions/checkout@v4
-        name: Checkout
-      - 
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-        name: Setup Rust
-        with:
-          cache-key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          cache-workspaces: true
-      - name: Publish (${{ github.event.repository.name }})
-        run: cargo publish --locked --package ${{ github.event.repository.name }}
+        name: Publish (${{ matrix.package }})
+        run: cargo publish --locked --package ${{ matrix.package }}
