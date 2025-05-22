@@ -18,7 +18,7 @@ ADD . .
 # build the project
 RUN --mount=type=cache,target=/workspace/target/ \
     --mount=type=cache,target=/usr/local/cargo/registry/ \
-    cargo build --locked --release --features full --workspace
+    cargo build -r --all-features --locked --workspace
 # STAGE 3: create the runtime image
 FROM debian:bookworm-slim AS runner-base
 # update and upgrade the system packages
