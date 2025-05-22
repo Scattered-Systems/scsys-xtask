@@ -3,7 +3,7 @@ authors = [
     "FL03 <jo3mccain@icloud.com>", 
     "Scattered-Systems <support@scsys.io>"
 ]
-categories = ["dev-tools"]
+categories = ["development-tools::build-utils"]
 default-run = "scsys"
 description = "A custom build system for the scsys ecosystem"
 edition = "2024"
