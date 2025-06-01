@@ -74,6 +74,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7d902e3d592a523def97af8f317b08ce16b7ab854c1985a0c671e6f15cebc236"
 
 [[package]]
+name = "arrayref"
+version = "0.3.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "76a2e8124351fda1ef8aaaa3bbd7ebbcb486bbcd4225aca0aa0d84bb2db8fecb"
+
+[[package]]
+name = "arrayvec"
+version = "0.7.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7c02d123df017efcdfbd739ef81735b36c5ba83ec3c59c80a9d7ecc718f92e50"
+
+[[package]]
 name = "async-trait"
 version = "0.1.88"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -97,6 +109,26 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9d297deb1925b89f2ccc13d7635fa0714f12c87adce1c75356b39ca9b7178567"
 
 [[package]]
+name = "bincode"
+version = "2.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "36eaf5d7b090263e8150820482d5d93cd964a81e4019913c972f4edcc6edb740"
+dependencies = [
+ "bincode_derive",
+ "serde",
+ "unty",
+]
+
+[[package]]
+name = "bincode_derive"
+version = "2.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bf95709a440f45e986983918d0e8a1f30a9b1df04918fc828670606804ac3c09"
+dependencies = [
+ "virtue",
+]
+
+[[package]]
 name = "bitflags"
 version = "2.9.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -106,12 +138,34 @@ dependencies = [
 ]
 
 [[package]]
+name = "blake3"
+version = "1.8.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3888aaa89e4b2a40fca9848e400f6a658a5a3978de7be858e209cafa8be9a4a0"
+dependencies = [
+ "arrayref",
+ "arrayvec",
+ "cc",
+ "cfg-if",
+ "constant_time_eq",
+]
+
+[[package]]
 name = "block-buffer"
 version = "0.10.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3078c7629b62d3f0439517fa394996acacc5cbc91c5a20d8c658e77abd503a71"
 dependencies = [
  "generic-array 0.14.7",
+]
+
+[[package]]
+name = "cc"
+version = "1.2.25"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d0fc897dc1e865cc67c0e05a836d9d3f1df3cbe442aa4a9473b18e12624a4951"
+dependencies = [
+ "shlex",
 ]
 
 [[package]]
@@ -213,6 +267,12 @@ dependencies = [
  "once_cell",
  "tiny-keccak",
 ]
+
+[[package]]
+name = "constant_time_eq"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7c74b8349d32d297c9134b8c88677813a227df8f779daa29bfc29c183fe3dca6"
 
 [[package]]
 name = "convert_case"
@@ -350,12 +410,6 @@ dependencies = [
  "r-efi",
  "wasi 0.14.2+wasi-0.2.4",
 ]
-
-[[package]]
-name = "glob"
-version = "0.3.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a8d1add55171497b4705a648c6b583acafb01d58050a51727785f0b2c8e0a2b2"
 
 [[package]]
 name = "hashbrown"
@@ -792,26 +846,26 @@ checksum = "28d3b2b1366ec20994f1fd18c3c594f05c5dd4bc44d8bb0c1c632c8d6829481f"
 
 [[package]]
 name = "scsys"
-version = "0.2.5"
+version = "0.2.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f87fad8a9ec1eb219001987dc14eeff830b79d9cd6f876bcf59bc16f18dc8727"
+checksum = "611a66e87dfdb691d117bfb00cb281aea45a6cf36a0024b078e9f0354d79eb7d"
 dependencies = [
  "scsys-core",
  "scsys-crypto",
  "scsys-derive",
+ "scsys-macros",
  "scsys-traits",
  "scsys-util",
 ]
 
 [[package]]
 name = "scsys-core"
-version = "0.2.5"
+version = "0.2.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5851143b6410472b523c2319b9f28abe6ceea1006edaca4a73cc5ef799fdebea"
+checksum = "fd399aec2895143cefde2a71711bcb6fa46d27b072baec155c6bbbe52fe5a263"
 dependencies = [
  "anyhow",
  "chrono",
- "glob",
  "num",
  "num-traits",
  "paste",
@@ -822,17 +876,21 @@ dependencies = [
  "strum",
  "thiserror",
  "time",
+ "tracing",
  "uuid",
 ]
 
 [[package]]
 name = "scsys-crypto"
-version = "0.2.5"
+version = "0.2.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "defafcfc93daa4fbcbade098648abfb6b644c504b85d4610252b28e76395aac1"
+checksum = "e31f0ddd5b6c6f1a5115f121c93c318979532ba7451b7d499dcb218f695298d6"
 dependencies = [
  "anyhow",
+ "bincode",
+ "blake3",
  "chrono",
+ "digest",
  "generic-array 1.2.0",
  "paste",
  "rand",
@@ -843,15 +901,27 @@ dependencies = [
  "strum",
  "thiserror",
  "time",
+ "tracing",
  "typenum",
  "uuid",
 ]
 
 [[package]]
 name = "scsys-derive"
-version = "0.2.5"
+version = "0.2.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fe278938ae4cde13423fe6c34f476591350e1ec14a1571080892040e6a11d8a1"
+checksum = "e120b90ac00014d38767588f7fe52ff34c89eff17f79f2cd5bc6ae389273ce17"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
+name = "scsys-macros"
+version = "0.2.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8dc894c8ec7d70f88510b31c59058678ca1c4cd234801d0bfd2c817825a40b04"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -860,22 +930,23 @@ dependencies = [
 
 [[package]]
 name = "scsys-traits"
-version = "0.2.5"
+version = "0.2.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dab885544d2a5398a498f76a8bd2ead2421ade87571fa1289abfb0d921aad0ea"
+checksum = "788fccc9e6f96dca5d973e66322edf445184b54afb37b07f4d5d72caa865d131"
 dependencies = [
  "num-traits",
 ]
 
 [[package]]
 name = "scsys-util"
-version = "0.2.5"
+version = "0.2.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5feca24f2de121eb5c5ff6a6f6780c8cb45b4462f95bb432d5c48abc7e946159"
+checksum = "c23e2cf19762946b932a38e04f160883b3ce0ee05f8bec9feb255aeefe922e37"
 dependencies = [
- "num",
+ "num-traits",
  "rand",
  "serde",
+ "serde_json",
  "strum",
 ]
 
@@ -973,6 +1044,12 @@ name = "shared_thread"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c7a6f98357c6bb0ebace19b22220e5543801d9de90ffe77f8abb27c056bac064"
+
+[[package]]
+name = "shlex"
+version = "1.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0fda2ff0d084019ba4d7c6f371c95d8fd75ce3524c3cb8fb653a3023f6323e64"
 
 [[package]]
 name = "smallvec"
@@ -1216,6 +1293,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f6ccf251212114b54433ec949fd6a7841275f9ada20dddd2f29e9ceea4501493"
 
 [[package]]
+name = "unty"
+version = "0.0.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6d49784317cd0d1ee7ec5c716dd598ec5b4483ea832a2dced265471cc0f690ae"
+
+[[package]]
 name = "utf8parse"
 version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1238,6 +1321,12 @@ name = "version_check"
 version = "0.9.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a"
+
+[[package]]
+name = "virtue"
+version = "0.0.18"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "051eb1abcf10076295e815102942cc58f9d5e3b4560e46e53c21e8ff6f3af7b1"
 
 [[package]]
 name = "wasi"
