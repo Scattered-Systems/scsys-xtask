@@ -40,7 +40,7 @@ clap = { features = ["cargo", "derive", "env"], optional = true, version = "4" }
 config = { optional = true, version = "0.15" }
 duct = { optional = true, version = "1" }
 # custom
-scsys = { features = ["derive"], version = "0.2.5" }
+scsys = { features = ["derive"], version = "0.2.8" }
 # data & serialization
 serde = { optional = true, features = ["derive"], version = "1" }
 serde_json = { optional = true, version = "1" }
